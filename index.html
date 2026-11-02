@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Adventure | 英语大冒险 - Interactive English Learning for Chinese Students</title>
+  <meta name="description" content="Read exciting English stories, discover new words, and become a confident English reader with bilingual translations, vocabulary audio, and quizzes." />
+  <meta property="og:title" content="English Adventure | 英语大冒险" />
+  <meta property="og:description" content="Interactive English-learning storybook platform for Chinese-speaking students with 10 engaging stories, bilingual translations, vocabulary audio, interactive quizzes, and gamified progress tracking." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-row">
+      <!-- Zone 1: Brand Wordmark -->
+      <a href="#home" class="brand-logo" id="brand-link" aria-label="English Adventure Home">
+        <span class="brand-icon" aria-hidden="true">📖</span>
+        <span>English Adventure</span>
+        <span class="brand-sub">英语大冒险</span>
+      </a>
+
+      <!-- Zone 2: Navigation Links -->
+      <nav class="main-nav" aria-label="Main Navigation">
+        <a href="#home" class="nav-link active" data-view="home">Home</a>
+        <a href="#stories" class="nav-link" data-view="stories">Stories</a>
+        <a href="#vocab" class="nav-link" data-view="vocab">Vocabulary</a>
+        <a href="#progress" class="nav-link" data-view="progress">My Progress</a>
+        <a href="#about" class="nav-link" data-view="about">About</a>
+      </nav>
+
+      <!-- Zone 3: Live Player Stats & Mobile Menu -->
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="nav-stats-chip" id="nav-stats">
+          <div class="stat-item" title="Daily Streak">
+            <span>🔥</span>
+            <span class="stat-val" id="nav-streak-val">1 Day</span>
+          </div>
+          <div class="stat-item" title="XP Points">
+            <span>⭐</span>
+            <span class="stat-val" id="nav-xp-val">0 XP</span>
+          </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobile-toggle-btn" aria-label="Toggle navigation menu">☰</button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <a href="#home" class="mobile-nav-link" data-view="home">📖 Home 首页</a>
+      <a href="#stories" class="mobile-nav-link" data-view="stories">📚 10 Stories 英语故事</a>
+      <a href="#vocab" class="mobile-nav-link" data-view="vocab">🔤 Vocabulary 词汇库</a>
+      <a href="#progress" class="mobile-nav-link" data-view="progress">🏆 My Progress 学习进度</a>
+      <a href="#about" class="mobile-nav-link" data-view="about">💡 About 关于本站</a>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main id="app-main">
+
+    <!-- VIEW 1: HOME & STORIES VIEW -->
+    <section id="view-home" class="app-view">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <div class="hero-kicker">
+              <span>✨</span>
+              <span>Magical English Learning Journey</span>
+            </div>
+            <h1 class="hero-title">Open a Book. Discover a World.</h1>
+            <p class="hero-subtitle">
+              Read exciting English stories, discover new words, and become a confident English reader!
+            </p>
+            <div class="hero-chinese-tip">
+              专为中文读者设计的互动英语故事阅读平台，配备双语对照、重点词汇发音与趣味测试。
+            </div>
+            <div class="hero-actions">
+              <button class="btn-primary" id="hero-start-btn">
+                <span>Start Your Adventure</span>
+                <span>➔</span>
+              </button>
+              <button class="btn-secondary" id="hero-vocab-btn">
+                <span>Review Vocabulary 词汇库</span>
+              </button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <img 
+              src="/src/assets/images/hero_storybook_adventure_1793593510765.jpg" 
+              alt="Enchanted open storybook glowing with adventure and London landmarks" 
+              class="hero-img" 
+              loading="lazy" 
+              referrerpolicy="no-referrer"
+              onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'><rect width=\'100%\' height=\'100%\' fill=\'%23f2ebd9\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'32\' font-family=\'serif\' fill=\'%23234734\'>📖 English Adventure</text></svg>';"
+            />
+          </div>
+        </div>
+
+        <!-- Global Reading Progress Strip -->
+        <div class="container">
+          <div class="global-progress-strip">
+            <div class="progress-info">
+              <div class="progress-label-row">
+                <span>Your Story Quest Progress</span>
+                <span id="home-progress-count">0 / 10 Stories Completed</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar-fill" id="home-progress-bar"></div>
+              </div>
+            </div>
+            <div class="progress-badges-peek">
+              <span>Level: <strong id="home-level-title" style="color:var(--forest-800)">Novice Explorer (初学者)</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Story Section -->
+      <section class="featured-section" id="featured-story-wrap">
+        <div class="container">
+          <div class="section-head">
+            <div class="section-kicker">Recommended Start 推荐精选</div>
+            <h2 class="section-title">Featured Adventure</h2>
+            <p class="section-desc">Begin your learning adventure with our introductory London story.</p>
+          </div>
+          <div class="featured-card">
+            <div class="featured-image-box">
+              <img 
+                src="/src/assets/images/story_london_student_1793593510936.jpg" 
+                alt="A student arriving in London" 
+                class="featured-img"
+                referrerpolicy="no-referrer"
+              />
+            </div>
+            <div class="featured-content">
+              <div class="story-meta-inline">
+                <span class="level-tag">Beginner (初级)</span>
+                <span aria-hidden="true">·</span>
+                <span>Story #1</span>
+                <span aria-hidden="true">·</span>
+                <span>⏱ 3 min read</span>
+              </div>
+              <h3 class="featured-title">A New Student in London</h3>
+              <p class="featured-summary">
+                Join Leo as he arrives in the bustling city of London, navigates the famous red double-decker bus, and makes his very first friend!
+              </p>
+              <div class="featured-cn-summary">
+                跟随初到伦敦的留学生Leo，体验首次乘坐红色双层巴士并结识新朋友的温暖故事。
+              </div>
+              <div>
+                <button class="btn-primary" onclick="window.app.openStory(1)">
+                  <span>Read Story Now 开始阅读</span>
+                  <span>➔</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The 10 Stories Section -->
+      <section class="stories-section" id="stories-section">
+        <div class="container">
+          <div class="section-head">
+            <div class="section-kicker">Complete Library 完整故事馆</div>
+            <h2 class="section-title">All 10 English Stories</h2>
+            <p class="section-desc">From beginner tales to inspiring life lessons, graded for progressive mastery.</p>
+          </div>
+
+          <!-- Difficulty Filter Tabs -->
+          <div class="filter-bar" role="tablist">
+            <button class="filter-btn active" data-filter="all">All Stories 全部 (10)</button>
+            <button class="filter-btn" data-filter="Beginner">Beginner 初级 (4)</button>
+            <button class="filter-btn" data-filter="Intermediate">Intermediate 中级 (4)</button>
+            <button class="filter-btn" data-filter="Upper Intermediate">Upper Intermediate 中高级 (2)</button>
+          </div>
+
+          <!-- Stories Grid -->
+          <div class="stories-grid" id="stories-grid-container">
+            <!-- Rendered dynamically by script.js -->
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- VIEW 2: STORY READER VIEW -->
+    <section id="view-reader" class="app-view" style="display: none;">
+      <div class="container reader-wrapper">
+        <!-- Top Toolbar -->
+        <div class="reader-nav-bar">
+          <button class="back-btn" id="reader-back-btn">
+            <span>←</span>
+            <span>Back to Stories 返回书架</span>
+          </button>
+          <div class="reader-controls">
+            <!-- Font Size Adjuster -->
+            <div class="font-size-controls" title="Adjust Font Size 调整字号">
+              <button class="font-btn" data-font="sm">A-</button>
+              <button class="font-btn active" data-font="md">A</button>
+              <button class="font-btn" data-font="lg">A+</button>
+              <button class="font-btn" data-font="xl">A++</button>
+            </div>
+            <!-- Bilingual Toggle -->
+            <button class="translation-toggle-btn" id="translation-toggle-btn">
+              <span>🇨🇳</span>
+              <span id="trans-toggle-text">Show Chinese Translation 显示译文</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Story Book Container -->
+        <article class="book-parchment-frame">
+          <header class="reader-header">
+            <div class="reader-story-num" id="reader-story-meta">Story #1 · Beginner · 3 min read</div>
+            <h1 class="reader-title" id="reader-title">A New Student in London</h1>
+            <div class="reader-cn-title" id="reader-cn-title">伦敦的新生</div>
+          </header>
+
+          <div class="reader-illustration" id="reader-illustration-box">
+            <img id="reader-hero-img" src="" alt="Story illustration" referrerpolicy="no-referrer" />
+          </div>
+
+          <!-- Story Text Paragraphs with Clickable Vocab Highlights -->
+          <div class="story-prose font-md" id="reader-story-content">
+            <!-- Injected by script.js -->
+          </div>
+
+          <!-- Story Vocabulary Learning Deck -->
+          <section class="story-vocab-section">
+            <h3 class="story-vocab-title">
+              <span>🌿</span>
+              <span>Key Vocabulary in This Story 重点词汇学习</span>
+            </h3>
+            <p style="font-size:0.92rem; color:var(--text-muted);">
+              Click the audio button to hear native pronunciation. Click any underlined word in the text above to inspect its definition!
+            </p>
+            <div class="vocab-cards-grid" id="story-vocab-grid">
+              <!-- Injected by script.js -->
+            </div>
+          </section>
+
+          <!-- Action Bar with Quiz Launch -->
+          <footer class="reader-action-bar">
+            <div class="quiz-launch-banner">
+              <div class="quiz-launch-text">
+                <h4>Ready to test your comprehension?</h4>
+                <p>Take the 5-question interactive quiz to test what you learned and earn XP!</p>
+              </div>
+              <button class="btn-primary" id="reader-take-quiz-btn">
+                <span>Take the Quiz 参加测试</span>
+                <span>➔</span>
+              </button>
+            </div>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- VIEW 3: VOCABULARY REVIEW HUB -->
+    <section id="view-vocab" class="app-view" style="display: none;">
+      <div class="container vocab-hub-wrapper">
+        <div class="section-head">
+          <div class="section-kicker">Word Bank 词汇宝典</div>
+          <h2 class="section-title">Vocabulary Explorer</h2>
+          <p class="section-desc">
+            Review and practice useful English words from all 10 stories with audio pronunciation and Chinese meanings.
+          </p>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="vocab-toolbar">
+          <div class="search-input-wrap">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input 
+              type="text" 
+              id="vocab-search-input" 
+              class="search-input" 
+              placeholder="Search by English word or Chinese meaning (搜索单词或释义)..." 
+            />
+          </div>
+          <select id="vocab-story-select" class="story-select-dropdown" aria-label="Filter by story">
+            <option value="all">All Stories 全部故事词汇 (80+ words)</option>
+            <option value="1">Story 1: A New Student in London</option>
+            <option value="2">Story 2: My First Day at School</option>
+            <option value="3">Story 3: The Missing Wallet</option>
+            <option value="4">Story 4: A Trip to the Supermarket</option>
+            <option value="5">Story 5: The Power of Friendship</option>
+            <option value="6">Story 6: An Unexpected Journey</option>
+            <option value="7">Story 7: The Importance of Time</option>
+            <option value="8">Story 8: A Dream Worth Following</option>
+            <option value="9">Story 9: Technology and Our Future</option>
+            <option value="10">Story 10: A Lesson That Changed My Life</option>
+          </select>
+        </div>
+
+        <!-- Full Vocab Grid -->
+        <div class="vocab-grid-full" id="all-vocab-grid">
+          <!-- Injected by script.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: MY PROGRESS DASHBOARD -->
+    <section id="view-progress" class="app-view" style="display: none;">
+      <div class="container progress-dashboard">
+        <div class="section-head">
+          <div class="section-kicker">Learner Profile 学习者档案</div>
+          <h2 class="section-title">My Learning Adventure</h2>
+          <p class="section-desc">Track your reading milestones, quiz performance, and badge achievements.</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid-dashboard">
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon">📖</div>
+            <div class="stat-metric-num" id="dash-stories-completed">0 / 10</div>
+            <div class="stat-metric-label">Stories Completed</div>
+            <div class="stat-metric-cn">已完成故事</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon">⭐</div>
+            <div class="stat-metric-num" id="dash-total-xp">0</div>
+            <div class="stat-metric-label">Total XP Earned</div>
+            <div class="stat-metric-cn">累计冒险经验</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon">🎯</div>
+            <div class="stat-metric-num" id="dash-avg-score">0%</div>
+            <div class="stat-metric-label">Average Quiz Score</div>
+            <div class="stat-metric-cn">测试平均准确率</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon">🔤</div>
+            <div class="stat-metric-num" id="dash-vocab-learned">0 / 80</div>
+            <div class="stat-metric-label">Vocabulary Explored</div>
+            <div class="stat-metric-cn">已探索重点词汇</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-metric-icon">🔥</div>
+            <div class="stat-metric-num" id="dash-streak">1 Day</div>
+            <div class="stat-metric-label">Daily Streak</div>
+            <div class="stat-metric-cn">连续学习天数</div>
+          </div>
+        </div>
+
+        <!-- Badges Showcase -->
+        <div class="badges-section">
+          <h3 class="section-title" style="font-size:1.5rem;">Achievement Badges 成就徽章</h3>
+          <p class="section-desc">Earn badges by reading, mastering quizzes, and learning vocabulary.</p>
+          <div class="badges-grid" id="badges-grid">
+            <!-- Injected by script.js -->
+          </div>
+        </div>
+
+        <!-- Story-by-Story Breakdown -->
+        <div class="stories-table-wrap">
+          <table class="progress-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Story Title 故事名称</th>
+                <th>Difficulty 难度</th>
+                <th>Reading Status 阅读状态</th>
+                <th>Quiz Best Score 测试最高分</th>
+                <th>Action 操作</th>
+              </tr>
+            </thead>
+            <tbody id="progress-table-body">
+              <!-- Injected by script.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: ABOUT PAGE -->
+    <section id="view-about" class="app-view" style="display: none;">
+      <div class="container about-wrapper">
+        <article class="about-card">
+          <div class="section-kicker">About the Platform 关于本站</div>
+          <h2 class="section-title" style="margin-bottom:1rem;">Welcome to English Adventure</h2>
+          
+          <blockquote class="about-mission-quote">
+            "English Adventure helps Chinese-speaking students improve their English through interesting stories, vocabulary practice, interactive quizzes, and fun learning challenges."
+          </blockquote>
+          <p style="font-family:var(--font-chinese); color:var(--text-chinese); margin-top:-1rem; margin-bottom:1.75rem;">
+            “英语大冒险致力于帮助中文学生通过有趣的原创故事、词汇练习、互动测试和趣味学习挑战，轻松提高英语阅读与理解能力。”
+          </p>
+
+          <h3 style="font-family:var(--font-display); font-size:1.4rem; color:var(--forest-900); margin-top:2rem;">
+            Why Learning Through Stories Works 故事学习法的魅力
+          </h3>
+          <div class="tips-grid">
+            <div class="tip-box">
+              <h4>1. Contextual Vocabulary (语境记忆)</h4>
+              <p>Words are not learned in isolation. Reading them inside genuine story plots reinforces semantic meaning and collocations naturally.</p>
+            </div>
+            <div class="tip-box">
+              <h4>2. Bilingual Scaffold (双语脚手架)</h4>
+              <p>Toggle Simplified Chinese translations at any time whenever you encounter complex sentence structures or idioms.</p>
+            </div>
+            <div class="tip-box">
+              <h4>3. Audio Pronunciation (原声发音)</h4>
+              <p>Listen to accurate native English pronunciation using browser speech synthesis directly for every vocabulary card.</p>
+            </div>
+            <div class="tip-box">
+              <h4>4. Immediate Feedback (即时反馈测试)</h4>
+              <p>Reinforce retention with 5 varied question types per story and clear bilingual explanations for every answer.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- INTERACTIVE QUIZ MODAL -->
+  <div class="modal-overlay" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title">
+    <div class="quiz-card-modal">
+      <div class="quiz-modal-header">
+        <h3 class="quiz-modal-title" id="quiz-modal-title">Story Quiz · 章节测验</h3>
+        <button class="quiz-close-btn" id="quiz-close-btn" aria-label="Close quiz">&times;</button>
+      </div>
+      <div class="quiz-progress-bar-container">
+        <div class="quiz-progress-bar" id="quiz-progress-fill"></div>
+      </div>
+
+      <!-- Quiz Question Body -->
+      <div class="quiz-modal-body" id="quiz-question-container">
+        <div class="question-meta-row">
+          <span id="quiz-question-counter">Question 1 of 5</span>
+          <span id="quiz-question-type">Multiple Choice</span>
+        </div>
+
+        <h4 class="question-text" id="quiz-question-text">Question text goes here</h4>
+        <div class="question-text-cn" id="quiz-question-cn">中文题目翻译</div>
+
+        <!-- Choices Container -->
+        <div class="options-stack" id="quiz-options-box">
+          <!-- Dynamic Choices -->
+        </div>
+
+        <!-- Fill In The Blank Box -->
+        <div class="fill-blank-box" id="quiz-fill-blank-box" style="display: none;">
+          <input 
+            type="text" 
+            id="quiz-blank-input" 
+            class="fill-blank-input" 
+            placeholder="Type your answer here (输入你的答案)..." 
+            autocomplete="off" 
+          />
+        </div>
+
+        <!-- Feedback Box -->
+        <div class="quiz-feedback-box" id="quiz-feedback-box">
+          <div class="feedback-status-header" id="feedback-status-title">✓ Correct! Excellent job.</div>
+          <div id="feedback-en-text">Explanation in English.</div>
+          <div class="feedback-cn-text" id="feedback-cn-text">中文解析说明</div>
+        </div>
+      </div>
+
+      <!-- Quiz Results Card (Shown at end) -->
+      <div class="quiz-results-card" id="quiz-results-container" style="display: none;">
+        <div class="results-stars-row" id="results-stars">⭐⭐⭐⭐⭐</div>
+        <div class="results-score-big" id="results-score-pct">100%</div>
+        <div class="results-score-subtitle" id="results-score-detail">5 out of 5 Questions Correct</div>
+        <div class="results-encouragement" id="results-feedback-message">
+          Outstanding work! You have mastered this story and demonstrated excellent reading comprehension.
+        </div>
+        <div class="results-xp-award" id="results-xp-badge">
+          <span>⭐</span>
+          <span id="results-xp-text">+150 XP Earned!</span>
+        </div>
+      </div>
+
+      <!-- Quiz Footer Controls -->
+      <div class="quiz-modal-footer">
+        <button class="btn-primary" id="quiz-submit-btn">
+          <span>Submit Answer 提交答案</span>
+        </button>
+        <button class="btn-primary" id="quiz-next-btn" style="display: none;">
+          <span>Next Question 下一题 ➔</span>
+        </button>
+        <button class="btn-secondary" id="quiz-retake-btn" style="display: none;">
+          <span>Retake Quiz 重新测试</span>
+        </button>
+        <button class="btn-primary" id="quiz-finish-btn" style="display: none;">
+          <span>Return to Stories 返回故事 ➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING VOCAB QUICK TOOLTIP POPOVER -->
+  <div class="vocab-quick-popover" id="vocab-popover">
+    <div class="vocab-popover-word-row">
+      <span class="vocab-popover-word" id="popover-word">adventure</span>
+      <button class="vocab-speech-btn" id="popover-speech-btn" title="Pronounce">🔊</button>
+    </div>
+    <div class="vocab-popover-cn" id="popover-cn">冒险，探索</div>
+    <div class="vocab-popover-sentence" id="popover-sentence">Leo was excited for his new adventure.</div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-notice" id="toast-notice" role="status" aria-live="polite">
+    <span id="toast-icon">⭐</span>
+    <span id="toast-msg">Progress saved!</span>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span>📖</span>
+          <span>English Adventure · 英语大冒险</span>
+        </div>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#stories">Stories</a>
+          <a href="#vocab">Vocabulary</a>
+          <a href="#progress">My Progress</a>
+          <a href="#about">About</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>An interactive English learning storybook for Chinese-speaking students.</div>
+        <div>All 10 Original Stories & Quizzes · Saved via localStorage</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+</body>
+</html>

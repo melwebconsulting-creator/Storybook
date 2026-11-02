@@ -1,0 +1,6 @@
+{
+  "name": "English Adventure",
+  "description": "Interactive English-learning storybook platform for Chinese-speaking students with 10 engaging stories, bilingual translations, vocabulary audio, interactive quizzes, and gamified progress tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
